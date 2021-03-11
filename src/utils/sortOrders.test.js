@@ -1,5 +1,5 @@
 import React from 'react'
-import {sortByItemCount} from './sortOrders';
+import {getSortFunction, sortByDate, sortByItemCount, sortOrders, sortTypes} from './sortOrders';
 
 describe('sortByItemCount function', () => {
 	it('orders are null', () => {
@@ -20,5 +20,82 @@ describe('sortByItemCount function', () => {
 
 		expect(result).toBe(0);
 	});
+
+	test.each([
+		[{items: ['1']}, {items: ['1', '2']}, -1],
+		[{items: ['1', '2']}, {items: ['1']}, 1],
+		['1', {}, 0],
+		[{items: null}, {}, 0]
+	])('need $expected with order1 $a and order2 $b', (a, b, expected) => {
+		const result = sortByItemCount(a, b);
+		expect(result).toBe(expected);
+	})
+
+	it.each([
+		[sortTypes.DATE, sortByDate],
+		[sortTypes.COUNT, sortByItemCount]
+	])('need $expected func for sort type $type', (type, expected) => {
+		const result = getSortFunction(type);
+		expect(result).toBe(expected);
+	})
+
+	let mockSortFunc;
+	let date1;
+	let date2;
+
+	beforeEach(() => {
+		mockSortFunc = jest.fn(() => {return true});
+		date1 = new Date(0);					// 01.01.1970 UTC+0
+		date2 = new Date(24 * 3600 * 1000);	// 02.01.1970 UTC+0
+	})
+
+	it('no orders for sort', () => {
+		expect(sortOrders([], mockSortFunc)).toHaveBeenCalledTimes(0)
+		jest.resetAllMocks()
+	})
+
+	it('no sort func', () => {
+		expect(sortOrders([{items: ['1']}], null)).toHaveBeenCalledTimes(0)
+		jest.resetAllMocks()
+	})
+
+	it('correct orders and sort func', () => {
+		expect(sortOrders([{items: ['1']}, {items: ['1', '2']}], mockSortFunc)).toHaveBeenCalledTimes(1)
+		jest.resetAllMocks()
+	})
+
+	//TODO: test.each
+	it('orders are null for sort by date', () => {
+		const result = sortByDate(null, null);
+		expect(result).toEqual(0);
+	})
+
+	it('first date less then second', () => {
+		const result = sortByDate({date: date1}, {date: date2});
+		expect(result).toBe(1);
+	})
+
+	it('second date less then first', () => {
+		const result = sortByDate({date: date2}, {date: date1});
+		expect(result).toBe(-1);
+	})
+
+	it('equal dates', () => {
+		const result = sortByDate({date: date1}, {date: date1});
+		expect(result).toBe(0);
+	})
+
+	it('order not an object', () => {
+		const result = sortByDate('1', {date: date2});
+		expect(result).toBe(1);
+	})
+
+	it('order with null date', () => {
+		const result = sortByDate({date: null}, {date: date2});
+		expect(result).toBe(1);
+	})
+
+
+
 });
 
