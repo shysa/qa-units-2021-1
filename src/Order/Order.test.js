@@ -26,18 +26,8 @@ describe('Order.js', () => {
     expect(testComponent).toMatchSnapshot();
   });
 
-  it('check no orders', () => {
-    const testComponent = shallow(<Order key={0} order={null} />);
-    expect(testComponent).toMatchSnapshot();
-  });
-
   it('check null props', () => {
     const testComponent = shallow(<Order key={0} order={{shop: null, date: null}} />);
-    expect(testComponent).toMatchSnapshot();
-  });
-
-  it('check no orders', () => {
-    const testComponent = shallow(<Order key={0} order={null} />);
     expect(testComponent).toMatchSnapshot();
   });
 })
