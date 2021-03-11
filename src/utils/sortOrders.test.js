@@ -44,24 +44,24 @@ describe('sortByItemCount function', () => {
 	let date2;
 
 	beforeEach(() => {
-		mockSortFunc = jest.fn(() => {return true});
+		mockSortFunc = jest.fn(() => 0);
 		date1 = new Date(0);					// 01.01.1970 UTC+0
 		date2 = new Date(24 * 3600 * 1000);	// 02.01.1970 UTC+0
 	})
 
 	it('no orders for sort', () => {
-		expect(sortOrders([], mockSortFunc)).toHaveBeenCalledTimes(0)
-		jest.resetAllMocks()
+		sortOrders([], mockSortFunc)
+		expect(mockSortFunc).toHaveBeenCalledTimes(0)
 	})
 
 	it('no sort func', () => {
-		expect(sortOrders([{items: ['1']}], null)).toHaveBeenCalledTimes(0)
-		jest.resetAllMocks()
+		sortOrders([{items: ['1']}], null)
+		expect(mockSortFunc).toHaveBeenCalledTimes(0)
 	})
 
 	it('correct orders and sort func', () => {
-		expect(sortOrders([{items: ['1']}, {items: ['1', '2']}], mockSortFunc)).toHaveBeenCalledTimes(1)
-		jest.resetAllMocks()
+		sortOrders([{items: ['1']}, {items: ['1', '2']}], mockSortFunc)
+		expect(mockSortFunc).toHaveBeenCalled()
 	})
 
 	//TODO: test.each
@@ -87,12 +87,12 @@ describe('sortByItemCount function', () => {
 
 	it('order not an object', () => {
 		const result = sortByDate('1', {date: date2});
-		expect(result).toBe(1);
+		expect(result).toBe(0);
 	})
 
 	it('order with null date', () => {
 		const result = sortByDate({date: null}, {date: date2});
-		expect(result).toBe(1);
+		expect(result).toBe(0);
 	})
 
 

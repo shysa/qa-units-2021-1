@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Order.js check no items in order 1`] = `
+<div
+  className="Order"
+>
+  <div
+    className="Order-header"
+  >
+    <span
+      className="Order-shop"
+    >
+      test shop
+    </span>
+    <span
+      id="date"
+    >
+      15 марта, чт, 2021 год
+    </span>
+  </div>
+  <div
+    className="Order-items"
+  />
+</div>
+`;
+
 exports[`Order.js check no orders 1`] = `""`;
 
 exports[`Order.js check no orders 2`] = `""`;
@@ -22,7 +46,9 @@ exports[`Order.js render correctly component 1`] = `
     </span>
     <span
       id="date"
-    />
+    >
+      15 марта, чт, 2021 год
+    </span>
   </div>
   <div
     className="Order-items"

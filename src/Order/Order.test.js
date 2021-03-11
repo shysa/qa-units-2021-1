@@ -3,19 +3,14 @@ import Order from "./Order";
 import {fakeOrders} from "../data/fakeOrders";
 import {shallow, configure, mount} from "enzyme";
 import Adapter from 'enzyme-adapter-react-16';
+import {getDate} from "../utils/getDate";
 
 jest.mock('../utils/getDate');
+getDate.mockReturnValue("15 марта, чт, 2021 год");
 
 configure({ adapter: new Adapter() });
 
 describe('Order.js', () => {
-  beforeEach( () => {
-    getDate.mockReturnValue('01.01.1970');
-  })
-  afterEach( () => {
-    getDate.mockClear();
-  })
-
   it('render correctly component', () => {
     const testComponent = shallow(<Order key={0} order={fakeOrders[0]}/>);
     expect(testComponent).toMatchSnapshot();
