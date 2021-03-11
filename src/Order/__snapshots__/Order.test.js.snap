@@ -15,7 +15,7 @@ exports[`Order.js check no items in order 1`] = `
     <span
       id="date"
     >
-      15 марта, чт, 2021 год
+      11 марта, чт, 2021 год
     </span>
   </div>
   <div
@@ -25,10 +25,6 @@ exports[`Order.js check no items in order 1`] = `
 `;
 
 exports[`Order.js check no orders 1`] = `""`;
-
-exports[`Order.js check no orders 2`] = `""`;
-
-exports[`Order.js check no orders 3`] = `""`;
 
 exports[`Order.js check null props 1`] = `""`;
 
@@ -47,7 +43,7 @@ exports[`Order.js render correctly component 1`] = `
     <span
       id="date"
     >
-      15 марта, чт, 2021 год
+      11 марта, чт, 2021 год
     </span>
   </div>
   <div

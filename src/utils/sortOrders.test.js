@@ -30,7 +30,9 @@ describe('sortByItemCount function', () => {
 		const result = sortByItemCount(a, b);
 		expect(result).toBe(expected);
 	})
+});
 
+describe('getSortFunction function', () => {
 	it.each([
 		[sortTypes.DATE, sortByDate],
 		[sortTypes.COUNT, sortByItemCount]
@@ -38,15 +40,12 @@ describe('sortByItemCount function', () => {
 		const result = getSortFunction(type);
 		expect(result).toBe(expected);
 	})
+});
 
+describe('sortOrders function', () => {
 	let mockSortFunc;
-	let date1;
-	let date2;
-
 	beforeEach(() => {
 		mockSortFunc = jest.fn(() => 0);
-		date1 = new Date(0);					// 01.01.1970 UTC+0
-		date2 = new Date(24 * 3600 * 1000);	// 02.01.1970 UTC+0
 	})
 
 	it('no orders for sort', () => {
@@ -62,6 +61,16 @@ describe('sortByItemCount function', () => {
 	it('correct orders and sort func', () => {
 		sortOrders([{items: ['1']}, {items: ['1', '2']}], mockSortFunc)
 		expect(mockSortFunc).toHaveBeenCalled()
+	})
+});
+
+describe('sortByDate function', () => {
+	let date1;
+	let date2;
+
+	beforeEach(() => {
+		date1 = new Date(0);					// 01.01.1970 UTC+0
+		date2 = new Date(24 * 3600 * 1000);	// 02.01.1970 UTC+0
 	})
 
 	//TODO: test.each
@@ -94,8 +103,5 @@ describe('sortByItemCount function', () => {
 		const result = sortByDate({date: null}, {date: date2});
 		expect(result).toBe(0);
 	})
-
-
-
 });
 
