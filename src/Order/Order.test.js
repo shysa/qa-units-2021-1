@@ -33,7 +33,7 @@ describe('Order.js', () => {
   it('check no items in order', () => {
     const order = {
       shop: 'test shop',
-      date: '11 марта, чт, 2021 год',
+      date: 0,
       items: null
     }
     const testComponent = shallow(<Order order={order} />);
@@ -44,7 +44,7 @@ describe('Order.js', () => {
   it('check null shop', () => {
     const order = {
       shop: null,
-      date: '11 марта, чт, 2021 год',
+      date: 0,
     }
     const testComponent = shallow(<Order order={order} />);
 
