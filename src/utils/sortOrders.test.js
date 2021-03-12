@@ -21,15 +21,64 @@ describe('sortByItemCount function', () => {
 		expect(result).toBe(0);
 	});
 
-	test.each([
-		[{items: ['1']}, {items: ['1', '2']}, -1],
-		[{items: ['1', '2']}, {items: ['1']}, 1],
-		['1', {}, 0],
-		[{items: null}, {}, 0]
-	])('need $expected with order1 $a and order2 $b', (a, b, expected) => {
-		const result = sortByItemCount(a, b);
-		expect(result).toBe(expected);
-	})
+	it('first order items count less than second', () => {
+		const order1 = {
+			items: ['1']
+		};
+
+		const order2 = {
+			items: ['1', '2'],
+		};
+
+		const result = sortByItemCount(order1, order2);
+
+		expect(result).toBe(-1);
+	});
+
+	it('second order items count less than first', () => {
+		const order1 = {
+			items: ['1', '2']
+		};
+
+		const order2 = {
+			items: ['1'],
+		};
+
+		const result = sortByItemCount(order1, order2);
+
+		expect(result).toBe(1);
+	});
+
+	it('orders are not objects', () => {
+		const order1 = '1';
+		const order2 = '2';
+
+		const result = sortByItemCount(order1, order2);
+
+		expect(result).toBe(0);
+	});
+
+	it('check empty orders', () => {
+		const order1 = {};
+		const order2 = {};
+
+		const result = sortByItemCount(order1, order2);
+
+		expect(result).toBe(0);
+	});
+
+	it('orders with null items', () => {
+		const order1 = {
+			items: null,
+		};
+		const order2 = {
+			items: null,
+		};
+
+		const result = sortByItemCount(order1, order2);
+
+		expect(result).toBe(0);
+	});
 });
 
 describe('getSortFunction function', () => {
@@ -54,12 +103,28 @@ describe('sortOrders function', () => {
 	})
 
 	it('no sort func', () => {
-		sortOrders([{items: ['1']}], null)
+		const order1 = {
+			items: ['1']
+		};
+
+		const order2 = {
+			items: ['2'],
+		};
+
+		sortOrders([order1, order2], null)
 		expect(mockSortFunc).toHaveBeenCalledTimes(0)
 	})
 
 	it('correct orders and sort func', () => {
-		sortOrders([{items: ['1']}, {items: ['1', '2']}], mockSortFunc)
+		const order1 = {
+			items: ['1']
+		};
+
+		const order2 = {
+			items: ['1', '2'],
+		};
+
+		sortOrders([order1, order2], mockSortFunc)
 		expect(mockSortFunc).toHaveBeenCalled()
 	})
 });
@@ -73,34 +138,75 @@ describe('sortByDate function', () => {
 		date2 = new Date(24 * 3600 * 1000);	// 02.01.1970 UTC+0
 	})
 
-	//TODO: test.each
-	it('orders are null for sort by date', () => {
+	it('orders are null', () => {
 		const result = sortByDate(null, null);
-		expect(result).toEqual(0);
+		expect(result).toBe(0);
 	})
 
-	it('first date less then second', () => {
-		const result = sortByDate({date: date1}, {date: date2});
+	it('first order date less then second', () => {
+		const order1 = {
+			date: date1
+		};
+
+		const order2 = {
+			date: date2
+		};
+
+		const result = sortByDate(order1, order2);
 		expect(result).toBe(1);
 	})
 
-	it('second date less then first', () => {
-		const result = sortByDate({date: date2}, {date: date1});
+	it('second order date less then first', () => {
+		const order1 = {
+			date: date2
+		};
+
+		const order2 = {
+			date: date1
+		};
+
+		const result = sortByDate(order1, order2);
 		expect(result).toBe(-1);
 	})
 
 	it('equal dates', () => {
-		const result = sortByDate({date: date1}, {date: date1});
+		const order1 = {
+			date: date1
+		};
+
+		const order2 = {
+			date: date1
+		};
+
+		const result = sortByDate(order1, order1);
 		expect(result).toBe(0);
 	})
 
 	it('order not an object', () => {
-		const result = sortByDate('1', {date: date2});
+		const order1 = '1';
+		const order2 = '2';
+
+		const result = sortByDate(order1, order2);
+		expect(result).toBe(0);
+	})
+
+	it('check empty orders', () => {
+		const order1 = {};
+		const order2 = {};
+
+		const result = sortByDate(order1, order2);
 		expect(result).toBe(0);
 	})
 
 	it('order with null date', () => {
-		const result = sortByDate({date: null}, {date: date2});
+		const order1 = {
+			date: null
+		};
+		const order2 = {
+			date: null
+		};
+
+		const result = sortByDate(order1, order2);
 		expect(result).toBe(0);
 	})
 });
